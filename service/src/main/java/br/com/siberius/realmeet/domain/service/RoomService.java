@@ -6,20 +6,16 @@ import br.com.siberius.realmeet.domain.exception.error.RoomNotFoundException;
 import br.com.siberius.realmeet.domain.mapper.RoomMapper;
 import br.com.siberius.realmeet.domain.repository.RoomRepository;
 import java.util.Objects;
-import javax.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class RoomService {
 
     private final RoomRepository roomRepository;
 
     private final RoomMapper roomMapper;
-
-    public RoomService(RoomRepository roomRepository, RoomMapper roomMapper) {
-        this.roomRepository = roomRepository;
-        this.roomMapper = roomMapper;
-    }
 
     public RoomDTO findById(Long id) {
         Objects.requireNonNull(id);
