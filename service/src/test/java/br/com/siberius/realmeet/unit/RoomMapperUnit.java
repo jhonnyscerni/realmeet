@@ -1,6 +1,6 @@
 package br.com.siberius.realmeet.unit;
 
-import br.com.siberius.realmeet.api.model.CreateRoomDTO;
+import br.com.siberius.realmeet.api.model.InputRoomDTO;
 import br.com.siberius.realmeet.api.model.RoomDTO;
 import br.com.siberius.realmeet.core.BaseUnitTest;
 import br.com.siberius.realmeet.domain.entity.Room;
@@ -34,13 +34,18 @@ public class RoomMapperUnit extends BaseUnitTest {
     }
 
     @Test
-    public void testCreateRoomDtoToEntity() {
-        CreateRoomDTO createRoomDTO = CreateRoomDTO.builder()
+    public void testUpdate() {
+        Room room = Room.builder()
             .name(TestConstants.DEFAULT_ROOM_NAME)
             .seats(TestConstants.DEFAULT_ROOM_SEATS).build();
-        Room room = victin.fromCreateRoomDtoToEntity(createRoomDTO);
 
-        Assertions.assertEquals(room.getName(), createRoomDTO.getName());
-        Assertions.assertEquals(room.getSeats(), createRoomDTO.getSeats());
+        InputRoomDTO inputRoomDTO = InputRoomDTO.builder()
+            .name(TestConstants.DEFAULT_ROOM_NAME)
+            .seats(TestConstants.DEFAULT_ROOM_SEATS).build();
+
+        victin.update(room, inputRoomDTO);
+
+        Assertions.assertEquals(room.getName(), inputRoomDTO.getName());
+        Assertions.assertEquals(room.getSeats(), inputRoomDTO.getSeats());
     }
 }

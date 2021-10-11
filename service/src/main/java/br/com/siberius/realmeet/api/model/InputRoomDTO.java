@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateRoomDTO {
+public class InputRoomDTO {
 
     @NotBlank
     private String name;

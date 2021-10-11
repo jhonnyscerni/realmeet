@@ -4,9 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import br.com.siberius.realmeet.api.model.CreateRoomDTO;
+import br.com.siberius.realmeet.api.model.InputRoomDTO;
 import br.com.siberius.realmeet.core.BaseUnitTest;
-import br.com.siberius.realmeet.domain.entity.Room;
 import br.com.siberius.realmeet.utils.TestConstants;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
@@ -28,31 +27,31 @@ class RoomValidatorUnit extends BaseUnitTest {
 
     @Test
     void testValidateWhenRoomIsValid() {
-        CreateRoomDTO createRoomDTO = CreateRoomDTO.builder()
+        InputRoomDTO inputRoomDTO = InputRoomDTO.builder()
             .name(TestConstants.DEFAULT_ROOM_NAME)
             .seats(TestConstants.DEFAULT_ROOM_SEATS).build();
 
-        Set<ConstraintViolation<CreateRoomDTO>> violations = validator.validate(createRoomDTO);
+        Set<ConstraintViolation<InputRoomDTO>> violations = validator.validate(inputRoomDTO);
         assertTrue(violations.isEmpty());
     }
 
     @Test
     void estValidateWhenRoomNameIsMissing() {
-        CreateRoomDTO createRoomDTO = CreateRoomDTO.builder()
+        InputRoomDTO inputRoomDTO = InputRoomDTO.builder()
             .name("")
             .seats(TestConstants.DEFAULT_ROOM_SEATS).build();
 
-        Set<ConstraintViolation<CreateRoomDTO>> violations = validator.validate(createRoomDTO);
+        Set<ConstraintViolation<InputRoomDTO>> violations = validator.validate(inputRoomDTO);
         assertFalse(violations.isEmpty());
     }
 
     @Test
     void testValidateWhenRoomSeatsIsNull() {
-        CreateRoomDTO createRoomDTO = CreateRoomDTO.builder()
+        InputRoomDTO inputRoomDTO = InputRoomDTO.builder()
             .name(TestConstants.DEFAULT_ROOM_NAME)
             .seats(null).build();
 
-        Set<ConstraintViolation<CreateRoomDTO>> violations = validator.validate(createRoomDTO);
+        Set<ConstraintViolation<InputRoomDTO>> violations = validator.validate(inputRoomDTO);
         assertFalse(violations.isEmpty());
     }
 

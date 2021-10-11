@@ -18,4 +18,8 @@ public class RoomDTO {
     private Integer seats;
 
     private Boolean active;
+
+    public void ativar() {
+        setActive(true);
+    }
 }

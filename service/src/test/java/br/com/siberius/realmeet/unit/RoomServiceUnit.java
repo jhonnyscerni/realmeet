@@ -3,7 +3,7 @@ package br.com.siberius.realmeet.unit;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
-import br.com.siberius.realmeet.api.model.CreateRoomDTO;
+import br.com.siberius.realmeet.api.model.InputRoomDTO;
 import br.com.siberius.realmeet.api.model.RoomDTO;
 import br.com.siberius.realmeet.core.BaseUnitTest;
 import br.com.siberius.realmeet.domain.entity.Room;
@@ -41,7 +41,7 @@ class RoomServiceUnit extends BaseUnitTest {
             .seats(TestConstants.DEFAULT_ROOM_SEATS).build();
         Mockito.when(roomRepository.findById(TestConstants.DEFAULT_ROOM_ID)).thenReturn(Optional.of(room));
 
-        RoomDTO roomDTO = victim.findById(TestConstants.DEFAULT_ROOM_ID);
+        RoomDTO roomDTO = victim.findByIdActive(TestConstants.DEFAULT_ROOM_ID);
         Assertions.assertEquals(room.getId(), roomDTO.getId());
         Assertions.assertEquals(room.getName(), roomDTO.getName());
         Assertions.assertEquals(room.getSeats(), roomDTO.getSeats());
@@ -50,19 +50,19 @@ class RoomServiceUnit extends BaseUnitTest {
     @Test
     void getRoomNotFound() {
         Mockito.when(roomRepository.findById(TestConstants.DEFAULT_ROOM_ID)).thenReturn(Optional.empty());
-        Assertions.assertThrows(RoomNotFoundException.class, () -> victim.findById(TestConstants.DEFAULT_ROOM_ID));
+        Assertions.assertThrows(RoomNotFoundException.class, () -> victim.findByIdActive(TestConstants.DEFAULT_ROOM_ID));
     }
 
     @Test
     void testCreateRoomSucess() {
-        CreateRoomDTO createRoomDTO = CreateRoomDTO.builder()
+        InputRoomDTO inputRoomDTO = InputRoomDTO.builder()
             .name(TestConstants.DEFAULT_ROOM_NAME)
             .seats(TestConstants.DEFAULT_ROOM_SEATS).build();
 
-        RoomDTO roomDTO = victim.salvar(createRoomDTO);
+        RoomDTO roomDTO = victim.create(inputRoomDTO);
 
-        Assertions.assertEquals(createRoomDTO.getName(), roomDTO.getName());
-        Assertions.assertEquals(createRoomDTO.getSeats(), roomDTO.getSeats());
+        Assertions.assertEquals(inputRoomDTO.getName(), roomDTO.getName());
+        Assertions.assertEquals(inputRoomDTO.getSeats(), roomDTO.getSeats());
 
         Mockito.verify(roomRepository).save(any());
     }
@@ -75,11 +75,11 @@ class RoomServiceUnit extends BaseUnitTest {
             .seats(TestConstants.DEFAULT_ROOM_SEATS).build();
         given(roomRepository.findByNameAndActive(TestConstants.DEFAULT_ROOM_NAME, true))
             .willReturn(Optional.of(room));
-        CreateRoomDTO createRoomDTO = CreateRoomDTO.builder()
+        InputRoomDTO inputRoomDTO = InputRoomDTO.builder()
             .name(TestConstants.DEFAULT_ROOM_NAME)
             .seats(TestConstants.DEFAULT_ROOM_SEATS).build();
 
-        Assertions.assertThrows(NegocioException.class, () -> victim.salvar(createRoomDTO));
+        Assertions.assertThrows(NegocioException.class, () -> victim.create(inputRoomDTO));
     }
 
 }
