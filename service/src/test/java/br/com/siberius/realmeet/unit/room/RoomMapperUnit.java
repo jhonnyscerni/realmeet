@@ -1,4 +1,4 @@
-package br.com.siberius.realmeet.unit;
+package br.com.siberius.realmeet.unit.room;
 
 import br.com.siberius.realmeet.api.model.InputRoomDTO;
 import br.com.siberius.realmeet.api.model.RoomDTO;

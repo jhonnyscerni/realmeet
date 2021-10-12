@@ -1,4 +1,4 @@
-package br.com.siberius.realmeet.unit;
+package br.com.siberius.realmeet.unit.room;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;

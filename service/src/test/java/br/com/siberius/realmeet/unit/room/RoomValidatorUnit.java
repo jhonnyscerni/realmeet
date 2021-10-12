@@ -1,4 +1,4 @@
-package br.com.siberius.realmeet.unit;
+package br.com.siberius.realmeet.unit.room;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
