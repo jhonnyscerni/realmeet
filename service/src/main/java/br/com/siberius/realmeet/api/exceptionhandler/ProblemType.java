@@ -1,4 +1,4 @@
-package br.com.siberius.realmeet.api.exceptionhandler.erro;
+package br.com.siberius.realmeet.api.exceptionhandler;
 
 import lombok.Getter;
 

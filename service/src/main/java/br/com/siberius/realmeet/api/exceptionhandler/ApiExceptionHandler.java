@@ -1,4 +1,4 @@
-package br.com.siberius.realmeet.api.exceptionhandler.erro;
+package br.com.siberius.realmeet.api.exceptionhandler;
 
 
 import br.com.siberius.realmeet.domain.exception.EntidadeEmUsoException;
@@ -67,7 +67,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         ProblemType problemType = ProblemType.DADOS_INVALIDOS;
         String detail = "Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente.";
 
-        List<Problem.Object> problemObjects = bindingResult.getAllErrors().stream()
+        List<ProblemDetail> problemObjects = bindingResult.getAllErrors().stream()
             .map(objectError -> {
                 String message = messageSource.getMessage(objectError, LocaleContextHolder.getLocale());
 
@@ -77,7 +77,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
                     name = ((FieldError) objectError).getField();
                 }
 
-                return Problem.Object.builder()
+                return ProblemDetail.builder()
                     .name(name)
                     .userMessage(message)
                     .build();

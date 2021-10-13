@@ -2,13 +2,16 @@ package br.com.siberius.realmeet.api.controller;
 
 import br.com.siberius.realmeet.api.model.InputRoomDTO;
 import br.com.siberius.realmeet.api.model.RoomDTO;
+import br.com.siberius.realmeet.api.openapi.RoomOpenApi;
 import br.com.siberius.realmeet.domain.service.RoomService;
+import io.swagger.v3.oas.annotations.Parameter;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,36 +26,43 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RestController
 @RequestMapping(value = "/rooms")
-public class RoomController {
+public class RoomController implements RoomOpenApi {
 
     private final Executor controllersExecutor;
     private final RoomService roomService;
 
-
-    @GetMapping
+    @Override
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public CompletableFuture<List<RoomDTO>> listar() {
         return CompletableFuture.supplyAsync(roomService::findAll);
     }
 
-    @GetMapping("/{id}")
+    @Override
+    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public CompletableFuture<RoomDTO> buscar(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() ->
             roomService.findByIdActive(id), controllersExecutor);
     }
 
-    @PostMapping
+    @Override
+    @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
-    public CompletableFuture<RoomDTO> adicionar(@RequestBody @Valid InputRoomDTO inputRoomDTO) {
+    public CompletableFuture<RoomDTO> adicionar(
+        @RequestBody @Valid InputRoomDTO inputRoomDTO) {
         return CompletableFuture.supplyAsync(() ->
             roomService.create(inputRoomDTO), controllersExecutor);
     }
 
-    @PutMapping("/{id}")
-    public CompletableFuture<RoomDTO> atualizar(@PathVariable Long id, @RequestBody @Valid InputRoomDTO inputRoomDTO) {
+    @Override
+    @PutMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public CompletableFuture<RoomDTO> atualizar(
+        @PathVariable Long id,
+        @RequestBody @Valid InputRoomDTO inputRoomDTO) {
         return CompletableFuture.supplyAsync(() ->
             roomService.update(id, inputRoomDTO), controllersExecutor);
     }
 
+    @Override
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public CompletableFuture<Void> excluir(@PathVariable Long id) {
@@ -60,20 +70,23 @@ public class RoomController {
             roomService.excluir(id), controllersExecutor);
     }
 
-    @PutMapping("/{id}/ativar")
+    @Override
+    @PutMapping(value = "/{id}/ativar", produces = {MediaType.APPLICATION_JSON_VALUE})
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public CompletableFuture<Void> ativar(@PathVariable Long id) {
+    public CompletableFuture<Void> ativar(
+        @Parameter(description = "ID de uma Room", example = "1", required = true)
+        @PathVariable Long id) {
         return CompletableFuture.runAsync(() ->
             roomService.ativar(id), controllersExecutor);
     }
 
-
-    @DeleteMapping("/{id}/desativar")
+    @Override
+    @DeleteMapping(value = "/{id}/desativar")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public CompletableFuture<Void> desativar(@PathVariable Long id) {
+    public CompletableFuture<Void> desativar(
+        @Parameter(description = "ID de uma Room", example = "1", required = true)
+        @PathVariable Long id) {
         return CompletableFuture.runAsync(() ->
             roomService.desativar(id), controllersExecutor);
     }
-
-
 }
