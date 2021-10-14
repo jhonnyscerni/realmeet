@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Tag(name = "Room", description = "Endpoint que trata das rooms")
 public interface RoomOpenApi {
 
-    @Operation(description = "Listar as Rooms")
+    @Operation(description = "Listar as Rooms", summary = "Listar as Rooms")
     CompletableFuture<List<RoomDTO>> listar();
 
-    @Operation(description = "Busca uma Room por ID")
+    @Operation(description = "Busca uma Room por ID", summary = "Busca uma Room por ID")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Busca Realizada com Sucesso"),
         @ApiResponse(responseCode = "400", description = "ID da Room inválido", content = @Content(schema = @Schema(implementation = Problem.class))),
@@ -29,14 +29,14 @@ public interface RoomOpenApi {
     })
     CompletableFuture<RoomDTO> buscar(@PathVariable Long id);
 
-    @Operation(description = "Cadastra uma Room")
+    @Operation(description = "Cadastra uma Room", summary = "Cadastra uma Room")
     @ApiResponses({
         @ApiResponse(responseCode = "201", description = "Room cadastrado"),
     })
     CompletableFuture<RoomDTO> adicionar(
         @RequestBody @Valid InputRoomDTO inputRoomDTO);
 
-    @Operation(description = "Atualiza uma Room por ID")
+    @Operation(description = "Atualiza uma Room por ID", summary = "Atualiza uma Room por ID")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Room atualizado"),
         @ApiResponse(responseCode = "404", description = "Room não encontrado", content = @Content(schema = @Schema(implementation = Problem.class)))
@@ -45,14 +45,14 @@ public interface RoomOpenApi {
         @PathVariable Long id,
         @RequestBody @Valid InputRoomDTO inputRoomDTO);
 
-    @Operation(method = "Exclui uma Room por ID")
+    @Operation(method = "Exclui uma Room por ID", summary = "Exclui uma Room por ID")
     @ApiResponses({
         @ApiResponse(responseCode = "204", description = "Room excluído"),
         @ApiResponse(responseCode = "404", description = "Room não encontrada", content = @Content(schema = @Schema(implementation = Problem.class)))
     })
     CompletableFuture<Void> excluir(@PathVariable Long id);
 
-    @Operation(description = "Ativa uma Room por ID")
+    @Operation(description = "Ativa uma Room por ID", summary = "Ativa uma Room por ID")
     @ApiResponses({
         @ApiResponse(responseCode = "204", description = "Room ativado"),
         @ApiResponse(responseCode = "404", description = "Room não encontrada", content = @Content(schema = @Schema(implementation = Problem.class)))
@@ -60,7 +60,7 @@ public interface RoomOpenApi {
     CompletableFuture<Void> ativar(
         @PathVariable Long id);
 
-    @Operation(description = "Inativa uma Room por ID")
+    @Operation(description = "Inativa uma Room por ID", summary = "Inativa uma Room por ID")
     @ApiResponses({
         @ApiResponse(responseCode = "204", description = "Room desativado"),
         @ApiResponse(responseCode = "404", description = "Room não encontrada", content = @Content(schema = @Schema(implementation = Problem.class)))

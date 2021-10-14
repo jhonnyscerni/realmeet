@@ -22,13 +22,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Tag(name = "Allocation", description = "Endpoint que trata das allocation")
 public interface AllocationOpenApi {
 
-    @Operation(description = "Pesquisar os profissionais")
+    @Operation(description = "Pesquisar Allocations", summary = "Pesquisar Allocations")
     Page<AllocationDTO> pesquisar(@ParameterObject AllocationFilter filter, @ParameterObject Pageable pageable);
 
-    @Operation(description = "Listar as Allocation")
+    @Operation(description = "Listar as Allocation", summary = "Listar as Allocation" )
     CompletableFuture<List<AllocationDTO>> listar();
 
-    @Operation(description = "Busca uma Allocation por ID")
+    @Operation(description = "Busca uma Allocation por ID", summary = "Busca uma Allocation por ID")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Busca Realizada com Sucesso"),
         @ApiResponse(responseCode = "400", description = "ID da Allocation inválido", content = @Content(schema = @Schema(implementation = Problem.class))),
@@ -36,13 +36,13 @@ public interface AllocationOpenApi {
     })
     CompletableFuture<AllocationDTO> buscar(@PathVariable Long id);
 
-    @Operation(description = "Cadastra uma Allocation")
+    @Operation(description = "Cadastra uma Allocation", summary = "Cadastra uma Allocation")
     @ApiResponses({
         @ApiResponse(responseCode = "201", description = "Allocation cadastrado"),
     })
     CompletableFuture<AllocationDTO> adicionar(@RequestBody @Valid InputAllocationDTO inputAllocationDTO);
 
-    @Operation(description = "Atualiza uma Allocation por ID")
+    @Operation(description = "Atualiza uma Allocation por ID", summary = "Atualiza uma Allocation por ID")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Allocation atualizado"),
         @ApiResponse(responseCode = "404", description = "Allocation não encontrado", content = @Content(schema = @Schema(implementation = Problem.class)))
@@ -50,7 +50,7 @@ public interface AllocationOpenApi {
     CompletableFuture<AllocationDTO> atualizar(@PathVariable Long id,
         @RequestBody @Valid InputAllocationDTO inputAllocationDTO);
 
-    @Operation(method = "Exclui uma Room por ID")
+    @Operation(method = "Exclui uma Room por ID", summary = "Exclui uma Room por ID")
     @ApiResponses({
         @ApiResponse(responseCode = "204", description = "Room excluído"),
         @ApiResponse(responseCode = "404", description = "Room não encontrada", content = @Content(schema = @Schema(implementation = Problem.class)))
