@@ -1,4 +1,4 @@
-package br.com.siberius.realmeet.config;
+package br.com.siberius.realmeet.config.validator;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;

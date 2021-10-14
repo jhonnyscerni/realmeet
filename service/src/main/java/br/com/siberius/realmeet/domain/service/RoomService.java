@@ -29,7 +29,7 @@ public class RoomService {
 
     private final RoomMapper roomMapper;
 
-    public RoomDTO findByIdActive(Long id) {
+    public RoomDTO buscarPorIdActive(Long id) {
         Objects.requireNonNull(id);
         return roomRepository.findByIdAndActive(id, true).map(roomMapper::toModel).orElseThrow(() -> new RoomNotFoundException(id));
     }
@@ -39,7 +39,7 @@ public class RoomService {
         return roomRepository.findById(id).orElseThrow(() -> new RoomNotFoundException(id));
     }
 
-    public List<RoomDTO> findAll() {
+    public List<RoomDTO> buscarTodos() {
         return roomRepository.findAll().stream().map(roomMapper::toModel).collect(Collectors.toList());
     }
 
@@ -81,14 +81,14 @@ public class RoomService {
 
     @Transactional
     public void ativar(Long id) {
-        RoomDTO roomDTOAtual = findByIdActive(id);
+        RoomDTO roomDTOAtual = buscarPorIdActive(id);
         roomDTOAtual.ativar();
         roomRepository.save(roomMapper.toEntity(roomDTOAtual));
     }
 
     @Transactional
     public void desativar(Long id) {
-        findByIdActive(id);
+        buscarPorIdActive(id);
         roomRepository.desactive(id);
     }
 

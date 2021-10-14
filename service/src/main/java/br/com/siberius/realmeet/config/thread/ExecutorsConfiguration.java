@@ -1,4 +1,4 @@
-package br.com.siberius.realmeet.config;
+package br.com.siberius.realmeet.config.thread;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Executor;

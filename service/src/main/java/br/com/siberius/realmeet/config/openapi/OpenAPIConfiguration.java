@@ -1,4 +1,4 @@
-package br.com.siberius.realmeet.config;
+package br.com.siberius.realmeet.config.openapi;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;

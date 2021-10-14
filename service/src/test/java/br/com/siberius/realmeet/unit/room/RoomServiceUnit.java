@@ -41,7 +41,7 @@ class RoomServiceUnit extends BaseUnitTest {
             .seats(TestConstants.DEFAULT_ROOM_SEATS).build();
         Mockito.when(roomRepository.findById(TestConstants.DEFAULT_ROOM_ID)).thenReturn(Optional.of(room));
 
-        RoomDTO roomDTO = victim.findByIdActive(TestConstants.DEFAULT_ROOM_ID);
+        RoomDTO roomDTO = victim.buscarPorIdActive(TestConstants.DEFAULT_ROOM_ID);
         Assertions.assertEquals(room.getId(), roomDTO.getId());
         Assertions.assertEquals(room.getName(), roomDTO.getName());
         Assertions.assertEquals(room.getSeats(), roomDTO.getSeats());
@@ -50,7 +50,7 @@ class RoomServiceUnit extends BaseUnitTest {
     @Test
     void getRoomNotFound() {
         Mockito.when(roomRepository.findById(TestConstants.DEFAULT_ROOM_ID)).thenReturn(Optional.empty());
-        Assertions.assertThrows(RoomNotFoundException.class, () -> victim.findByIdActive(TestConstants.DEFAULT_ROOM_ID));
+        Assertions.assertThrows(RoomNotFoundException.class, () -> victim.buscarPorIdActive(TestConstants.DEFAULT_ROOM_ID));
     }
 
     @Test

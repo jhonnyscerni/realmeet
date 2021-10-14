@@ -34,14 +34,14 @@ public class RoomController implements RoomOpenApi {
     @Override
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public CompletableFuture<List<RoomDTO>> listar() {
-        return CompletableFuture.supplyAsync(roomService::findAll);
+        return CompletableFuture.supplyAsync(roomService::buscarTodos);
     }
 
     @Override
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     public CompletableFuture<RoomDTO> buscar(@PathVariable Long id) {
         return CompletableFuture.supplyAsync(() ->
-            roomService.findByIdActive(id), controllersExecutor);
+            roomService.buscarPorIdActive(id), controllersExecutor);
     }
 
     @Override

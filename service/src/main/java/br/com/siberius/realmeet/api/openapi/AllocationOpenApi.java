@@ -3,6 +3,7 @@ package br.com.siberius.realmeet.api.openapi;
 import br.com.siberius.realmeet.api.exceptionhandler.Problem;
 import br.com.siberius.realmeet.api.model.AllocationDTO;
 import br.com.siberius.realmeet.api.model.InputAllocationDTO;
+import br.com.siberius.realmeet.api.model.filter.AllocationFilter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -12,11 +13,17 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import javax.validation.Valid;
+import org.springdoc.api.annotations.ParameterObject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Tag(name = "Allocation", description = "Endpoint que trata das allocation")
 public interface AllocationOpenApi {
+
+    @Operation(description = "Pesquisar os profissionais")
+    Page<AllocationDTO> pesquisar(@ParameterObject AllocationFilter filter, @ParameterObject Pageable pageable);
 
     @Operation(description = "Listar as Allocation")
     CompletableFuture<List<AllocationDTO>> listar();
